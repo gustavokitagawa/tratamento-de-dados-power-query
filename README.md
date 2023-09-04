@@ -1,5 +1,6 @@
 # Repositório de tratamentos de dados no Power Query
-Neste repositório, compartilho com a comunidade tratamentos no Power Query para situações comuns. 
+Neste repositório, compartilho com a comunidade tratamentos no Power Query para situações comuns.
+</br></br>Caso tenha qualquer apontamento ou comentário, sinta-se à vontade entrar em contato comigo via LinkedIn (<a href="https://www.linkedin.com/in/gustavokitagawa">in/gustavokitagawa</a>).
 
 ##
 
@@ -11,6 +12,3 @@ Neste repositório, compartilho com a comunidade tratamentos no Power Query para
 
 ### <a href="https://github.com/gustavokitagawa/tratamento-de-dados-power-query/blob/main/fnHorasDecimais">fnHorasDecimais</a>
 ✅ **Converte horários em valor de horas decimais**: tratamento útil para cálculos realizados a partir de horários como, por exemplo, banco de horas.
-
-## 
-Fique à vontade para pontuar e/ou questionar sobre os métodos que utilizei. Você pode entrar em contato comigo via LinkedIn (<a href="https://www.linkedin.com/in/gustavokitagawa/?lipi=urn%3Ali%3Apage%3Ad_flagship3_feed%3B4WI%2FZjJcSgyY6zunhxLegw%3D%3D">in/gustavokitagawa</a>).
