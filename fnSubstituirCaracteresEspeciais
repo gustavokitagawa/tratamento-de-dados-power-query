@@ -1,0 +1,20 @@
+(_Texto as text) =>
+
+// Essa função substitui os caracteres especiais por um caractere regular correspondente
+// Ex: "Não" por "Nao", "Señor" por "Senor"
+
+let
+    // Lista de caracteres especiais
+    CaracteresEspeciais   = Text.ToList ( "ÀÁÂÃÄàáâãäÈÉÊËèéêëÌÍÎÏĨìíîïĩÒÓÔÕÖòóôõöÙÚÛÜùúûüÇḈĆĈĊČçḉćĉċčÑñ" ),
+    // Lista de caracteres que substituirão os especiais
+    CaracteresRegulares    = Text.ToList ( "AAAAAaaaaaEEEEeeeeIIIIIiiiiiOOOOOoooooUUUUuuuuCCCCCCccccccNn" ),
+    // A função List.Zip criará uma tupla para as correspondências de caracteres
+    TuplaCaracteres        = List.Zip ( { CaracteresEspeciais , CaracteresRegulares } ),
+    // Transforma cada caractere do input _Texto em um item de lista
+    TextoParaSubstituir    = Text.ToList ( _Texto ),
+    // Substitui os caracteres especiais pelo seu correspondente de acordo com a dupla
+    CaracteresSubstituidos = List.ReplaceMatchingItems ( TextoParaSubstituir , TuplaCaracteres ),
+    // Transforma a lista de caracteres novamente em um valor de texto
+    TextoSubstituido       = Text.Combine ( CaracteresSubstituidos )
+in
+    TextoSubstituido
