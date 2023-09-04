@@ -1,0 +1,14 @@
+(_Texto as text) =>
+
+let
+	RemoverEspacosDesnecessarios =
+		Text.Combine(
+			List.Select(
+				Text.Split(
+					_Texto, " "
+					),
+				each _ <> ""
+			), " "
+		)
+in
+	RemoverEspacosDesnecessarios
