@@ -1,12 +1,12 @@
 (_Texto as text) =>
-
 let
 	RemoverEspacosDesnecessarios =
+		// 3. Combinar as substrings inserindo um espaço em branco entre elas
 		Text.Combine(
+			// 2. Selecionar apenas substrings diferentes de espaços em branco
 			List.Select(
-				Text.Split(
-					_Texto, " "
-					),
+				// 1. Dividir o input _Texto em substrings pelo espaço em branco " "
+				Text.Split( _Texto, " " ),
 				each _ <> ""
 			), " "
 		)
