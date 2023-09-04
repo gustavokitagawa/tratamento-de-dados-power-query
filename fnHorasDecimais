@@ -1,0 +1,20 @@
+( _Horario as time ) =>
+
+// Esta função recebe um parâmetro de entrada _Horario no formato de tempo.
+// Ela converte esse tempo em um valor decimal representando horas, minutos e segundos combinados.
+// Para calcular os minutos em horas decimais é necessário dividir por 60 (1 hora = 60 minutos).
+// E para calcular os segundos, dividir por 3600 (1 hora = 60 minutos x 60 segundos = 3600)
+
+let
+    // Extrai o valor das horas a partir do input _Horario
+    Horas    = Time.Hour ( _Horario ),
+
+    // Valor decimal dos minutos
+    Minutos  = Time.Minute ( _Horario ) / 60,
+
+    // Valor decimal dos segundos
+    Segundos = Time.Second ( _Horario ) / 3600
+
+in
+    // Retorna a soma dos valores de horas, minutos e segundos convertidos em horas decimais.
+    Horas + Minutos + Segundos
