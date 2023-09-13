@@ -1,5 +1,5 @@
 # Repositório de tratamentos de dados no Power Query
-Neste repositório, compartilho com a comunidade tratamentos no Power Query para situações comuns.
+Neste repositório, compartilho com a comunidade tratamentos no Power Query para situações comuns no tratamento e preparação de dados.
 </br></br>Caso tenha qualquer apontamento ou comentário, sinta-se à vontade entrar em contato comigo via LinkedIn (<a href="https://www.linkedin.com/in/gustavokitagawa">in/gustavokitagawa</a>).
 
 ##
