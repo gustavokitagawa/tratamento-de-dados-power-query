@@ -1,0 +1,74 @@
+/*
+    -----------------------------------
+    TABELA DIMENSÃO DE HORÁRIOS - V.1.0
+    -----------------------------------
+    FINALIDADE:
+    análises a partir de horários e
+    períodos (Madrugada, Manhã, Tarde e Noite)
+
+    COMO FUNCIONA:
+    A tabela dHorario
+
+    MÉTODO PARA GERAR A TABELA:
+    [1] Gera uma lista em segudos de 00:00:00 (0) a 23:59:59 (86399),
+        tranforma essa lista em coluna e altera o tipo para inteiro Int64.Type
+    [2] Cria uma coluna que calcula o valor em DIA DECIMAL
+        1 dia decimal = 60 segundos * 60 minutos * 24 horas = 86400
+    [3] Cria uma coluna de horário calculando a partir de input em DIA DECIMAL
+    [4] Cria uma coluna que retorna o período a partir do [Índice em segundos] com IF aninhados:
+        • Madrugada < 06:00:00 (21600 segundos) 
+        • Manhã     < 12:00:00 (43200 segundos)
+        • Tarde     < 18:00:00 (64800 segundos)
+        • Noite     ELSE (maior que 18:00:00)
+    [5] Cria uma coluna que calcula a hora cheia, com duas funções aninhadas:
+        Time.Hour retorna o valor da hora em INT, que é dividido por 24, para ficar em DIA DECIMAL
+        Time.From retorna um horário a partir de DIA DECIMAL
+    [6] Remove as colunas [Índice em segundos] e [Dia em decimal],
+        que não tem relevância para análise.
+*/
+
+let
+
+    // [1] Lista de índice em segundos
+    IndiceEmSegundos = 
+        Table.RenameColumns(
+            Table.TransformColumnTypes(
+                Table.FromList({0..86399}, Splitter.SplitByNothing(), null, null, ExtraValues.Error)
+                ,{{"Column1", Int64.Type}}
+            )
+            ,{{"Column1", "Índice em segundos"}}
+        ),
+
+    // [2] Calcula o valor em DIA DECIMAL
+    CalcularDiaEmDecimal =
+        Table.AddColumn( IndiceEmSegundos, "Dia em decimal",
+            each
+                [Índice em segundos] / (86400)
+            , type number
+        ),
+
+    // [3] Retorna os Horários
+    ConverterDecimalEmHorario =
+        Table.AddColumn(CalcularDiaEmDecimal, "Horário",
+        each
+            Time.From([Dia em decimal])
+            , type time
+        ),
+
+    // [4] Retorna o período
+    InserirPeriodo =
+        Table.AddColumn(ConverterDecimalEmHorario, "Período",
+        each
+            if [Índice em segundos] < 21600 then "Madrugada"
+            else if [Índice em segundos] < 43200 then "Manhã"
+            else if [Índice em segundos] < 64800 then "Tarde"
+            else "Noite"
+        , type text),
+    
+    // [5] Calculo da hora cheia
+    InserirHora = Table.AddColumn(InserirPeriodo, "Hora", each Time.From(Time.Hour([Horário])/24), type time),
+
+    // [6] Remove colunas desnecessárias 
+    RemoverColunas = Table.RemoveColumns(InserirHora,{"Índice em segundos", "Dia em decimal"})
+in
+    RemoverColunas
