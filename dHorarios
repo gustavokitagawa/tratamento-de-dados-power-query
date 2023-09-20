@@ -23,7 +23,8 @@
     [5] Cria uma coluna que calcula a hora cheia, com duas funções aninhadas:
         Time.Hour retorna o valor da hora em INT, que é dividido por 24, para ficar em DIA DECIMAL
         Time.From retorna um horário a partir de DIA DECIMAL
-    [6] Remove as colunas [Índice em segundos] e [Dia em decimal],
+    [6] Cria uma coluna para hora abrev no padrão "0h"
+    [7] Remove as colunas [Índice em segundos] e [Dia em decimal],
         que não tem relevância para análise.
 */
 
@@ -68,7 +69,10 @@ let
     // [5] Calculo da hora cheia
     InserirHora = Table.AddColumn(InserirPeriodo, "Hora", each Time.From(Time.Hour([Horário])/24), type time),
 
-    // [6] Remove colunas desnecessárias 
-    RemoverColunas = Table.RemoveColumns(InserirHora,{"Índice em segundos", "Dia em decimal"})
+    // [6] Hora abrev
+    InserirHoraAbrev = Table.AddColumn(InserirHora, "Hora Abrev", each Text.From( Time.Hour([Hora]) ) & "h", type text),
+
+    // [7] Remove colunas desnecessárias 
+    RemoverColunas = Table.RemoveColumns(InserirHoraAbrev,{"Índice em segundos", "Dia em decimal"})
 in
     RemoverColunas
